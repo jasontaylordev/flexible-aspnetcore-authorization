@@ -1,0 +1,120 @@
+#!csharp
+
+[Flags]
+public enum Permissions 
+{
+    None = 0,     // 00000  
+    A    = 1,     // 00001
+    B    = 2,     // 00010
+    C    = 4,     // 00100
+    D    = 8,     // 01000
+    E    = 16,    // 10000
+    All  = ~None  // 11111
+}
+// Permissions are stored using a C# flags enum
+// Applying the attribute indicates the enum can be treated as a bit field, i.e. a set of flags.
+// Note: Values are powers of 2, e.g. 2, 4, 8, 16, ... 
+
+// ~None - The operator ~ produces a complement of its operand by reversing each bit,
+//         So ~00000 = 11111 = A, B, C, D, E 
+
+var userPermissions = Permissions.A | Permissions.C;     // 00001 + 00100 = 00101 = 5
+var requiredPermissions = Permissions.A | Permissions.B; // 00001 + 00010 = 00011 = 3
+
+#!csharp
+
+// Output permissions (as string)
+Console.WriteLine($"Required Permissions: {requiredPermissions}");
+Console.WriteLine($"User Permissions: {userPermissions}");
+
+#!csharp
+
+// Output permissions (as int)
+Console.WriteLine($"Required Permissions: {(int)requiredPermissions}");
+Console.WriteLine($"User Permissions: {(int)userPermissions}");
+
+#!csharp
+
+// Check permissions
+Console.WriteLine($"Required Permissions: {requiredPermissions}");
+Console.WriteLine($"User Permissions: {userPermissions}");
+Console.WriteLine($"Authorised?: {userPermissions.HasFlag(requiredPermissions)}");
+
+#!csharp
+
+// Get list of all permissions
+var allPermissionsList = Enum.GetValues(typeof(Permissions))
+    .OfType<Permissions>()
+    .ToList();
+
+// Update permissions
+userPermissions = Permissions.A | Permissions.C;
+requiredPermissions = Permissions.A | Permissions.B;
+
+// Get list of required permissions
+var requiredPermissionsList = new List<Permissions>();
+foreach(var permission in allPermissionsList)
+{
+    if (requiredPermissions.HasFlag(permission))
+        requiredPermissionsList.Add(permission);
+}
+
+// Check permissions
+var authorized = false;
+foreach (var permission in requiredPermissionsList) 
+{
+    if (userPermissions.HasFlag(permission)) 
+    {
+        authorized = true;
+        break;
+    }
+}
+
+Console.WriteLine($"Authorised?: {authorized}");
+
+#!csharp
+
+// Add permission
+userPermissions |= Permissions.B;
+
+// Output permissions (as string)
+Console.WriteLine($"User Permissions: {userPermissions}");
+
+#!csharp
+
+// Remove permission
+userPermissions ^= Permissions.B;
+
+// Output permissions (as string)
+Console.WriteLine($"User Permissions: {userPermissions}");
+
+#!csharp
+
+// Create a policy name
+private const string PolicyPrefix = "Permissions";
+
+var policyName = $"{PolicyPrefix}{(int)requiredPermissions}";
+
+// Output policy name
+Console.WriteLine($"Policy Name: '{policyName}' ({requiredPermissions})");
+
+#!csharp
+
+// Update required permissions and policy name
+requiredPermissions = Permissions.A | Permissions.B | Permissions.C;
+
+policyName = $"{PolicyPrefix}{(int)requiredPermissions}";
+
+// Output policy name
+Console.WriteLine($"Policy Name: '{policyName}' ({requiredPermissions})");
+
+#!csharp
+
+// Get permissions based on policy name
+var permissionsValue = int.Parse(policyName[PolicyPrefix.Length..]);
+
+Console.WriteLine($"{policyName} Requirements: {(Permissions)permissionsValue}");
+
+#!csharp
+
+// How are permissions stored?
