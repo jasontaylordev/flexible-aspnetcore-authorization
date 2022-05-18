@@ -1,7 +1,7 @@
 #!csharp
 
 [Flags]
-public enum Permissions 
+public enum Permissions
 {
     None = 0,     // 00000  
     A    = 1,     // 00001
@@ -24,20 +24,20 @@ var requiredPermissions = Permissions.A | Permissions.B; // 00001 + 00010 = 0001
 #!csharp
 
 // Output permissions (as string)
-Console.WriteLine($"Required Permissions: {requiredPermissions}");
 Console.WriteLine($"User Permissions: {userPermissions}");
+Console.WriteLine($"Required Permissions: {requiredPermissions}");
 
 #!csharp
 
 // Output permissions (as int)
-Console.WriteLine($"Required Permissions: {(int)requiredPermissions}");
 Console.WriteLine($"User Permissions: {(int)userPermissions}");
+Console.WriteLine($"Required Permissions: {(int)requiredPermissions}");
 
 #!csharp
 
 // Check permissions
-Console.WriteLine($"Required Permissions: {requiredPermissions}");
 Console.WriteLine($"User Permissions: {userPermissions}");
+Console.WriteLine($"Required Permissions: {requiredPermissions}");
 Console.WriteLine($"Authorised?: {userPermissions.HasFlag(requiredPermissions)}");
 
 #!csharp
@@ -46,10 +46,6 @@ Console.WriteLine($"Authorised?: {userPermissions.HasFlag(requiredPermissions)}"
 var allPermissionsList = Enum.GetValues(typeof(Permissions))
     .OfType<Permissions>()
     .ToList();
-
-// Update permissions
-userPermissions = Permissions.A | Permissions.C;
-requiredPermissions = Permissions.A | Permissions.B;
 
 // Get list of required permissions
 var requiredPermissionsList = new List<Permissions>();
@@ -74,7 +70,7 @@ Console.WriteLine($"Authorised?: {authorized}");
 
 #!csharp
 
-// Add permission
+// Add permission (with logical OR operator)
 userPermissions |= Permissions.B;
 
 // Output permissions (as string)
@@ -82,7 +78,7 @@ Console.WriteLine($"User Permissions: {userPermissions}");
 
 #!csharp
 
-// Remove permission
+// Remove permission (with logical XOR operator)
 userPermissions ^= Permissions.B;
 
 // Output permissions (as string)
@@ -96,7 +92,8 @@ private const string PolicyPrefix = "Permissions";
 var policyName = $"{PolicyPrefix}{(int)requiredPermissions}";
 
 // Output policy name
-Console.WriteLine($"Policy Name: '{policyName}' ({requiredPermissions})");
+Console.WriteLine($"Required Permissions: {requiredPermissions} ({(int)requiredPermissions})");
+Console.WriteLine($"Policy Name: '{policyName}'");
 
 #!csharp
 
@@ -106,15 +103,13 @@ requiredPermissions = Permissions.A | Permissions.B | Permissions.C;
 policyName = $"{PolicyPrefix}{(int)requiredPermissions}";
 
 // Output policy name
-Console.WriteLine($"Policy Name: '{policyName}' ({requiredPermissions})");
+Console.WriteLine($"Required Permissions: {requiredPermissions} ({(int)requiredPermissions})");
+Console.WriteLine($"Policy Name: '{policyName}'");
 
 #!csharp
 
 // Get permissions based on policy name
 var permissionsValue = int.Parse(policyName[PolicyPrefix.Length..]);
 
-Console.WriteLine($"{policyName} Requirements: {(Permissions)permissionsValue}");
-
-#!csharp
-
-// How are permissions stored?
+Console.WriteLine($"Policy Name: {policyName}");
+Console.WriteLine($"Required Permissions: {(Permissions)permissionsValue}");
