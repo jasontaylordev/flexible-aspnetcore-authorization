@@ -25,6 +25,9 @@ var requiredPermissions = Permissions.A | Permissions.B; // 00001 + 00010 = 0001
 
 // Output permissions (as string)
 Console.WriteLine($"User Permissions: {userPermissions}");
+
+#!csharp
+
 Console.WriteLine($"Required Permissions: {requiredPermissions}");
 
 #!csharp
@@ -87,6 +90,7 @@ Console.WriteLine($"User Permissions: {userPermissions}");
 #!csharp
 
 // Create a policy name
+// [Authorize(Permissions.A | Permission.B)]
 private const string PolicyPrefix = "Permissions";
 
 var policyName = $"{PolicyPrefix}{(int)requiredPermissions}";

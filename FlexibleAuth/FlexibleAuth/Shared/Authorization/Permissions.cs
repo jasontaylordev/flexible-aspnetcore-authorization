@@ -11,5 +11,6 @@ public enum Permissions
     ConfigureAccessControl = 16,
     Counter = 32,
     Forecast = 64,
+    ViewAccessControl = 128,
     All = ~None
 }

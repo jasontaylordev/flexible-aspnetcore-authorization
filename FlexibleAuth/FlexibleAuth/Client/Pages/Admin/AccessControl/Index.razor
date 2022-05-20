@@ -1,5 +1,5 @@
 ﻿@page "/admin/access-control"
-@attribute [Authorize(Permissions.ConfigureAccessControl)]
+@attribute [Authorize(Permissions.ViewAccessControl | Permissions.ConfigureAccessControl)]
 
 <PageTitle>Access Control</PageTitle>
 
@@ -27,12 +27,23 @@
                 @foreach(var role in _vm.Roles)
                 {
                     <th>
-                        <input 
-                            type="checkbox" 
-                            class="form-check-input" 
-                            checked="@role.Has(permission)" 
-                            @onchange="(args) => 
-                                Set(role, permission, (bool)args.Value!)" />
+                        <FlexibleAuthorizeView Permissions="@Permissions.ConfigureAccessControl">
+                            <Authorized>
+                                <input 
+                                    type="checkbox" 
+                                    class="form-check-input" 
+                                    checked="@role.Has(permission)" 
+                                    @onchange="(args) => 
+                                        Set(role, permission, (bool)args.Value!)" />
+                            </Authorized>
+                            <NotAuthorized>
+                                <input 
+                                    type="checkbox" 
+                                    class="form-check-input" 
+                                    checked="@role.Has(permission)" 
+                                    disabled="disabled" />
+                            </NotAuthorized>
+                        </FlexibleAuthorizeView>
                     </th>
                 }
             </tr>

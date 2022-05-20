@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BasicAuth.Server.Controllers;
 
-[Authorize(Roles = "Administrators, Operations")]
+[Authorize(Roles = "Administrators, Operations, Auditors")]
 [ApiController]
 [Route("[controller]")]
 public class WeatherForecastController : ControllerBase

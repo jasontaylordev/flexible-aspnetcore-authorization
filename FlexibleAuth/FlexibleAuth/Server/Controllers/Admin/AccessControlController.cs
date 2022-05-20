@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlexibleAuth.Server.Controllers.Admin;
 
-[Authorize(Permissions.ConfigureAccessControl)]
 [ApiController]
 [Route("api/Admin/[controller]")]
 public class AccessControlController : ControllerBase
@@ -20,6 +19,7 @@ public class AccessControlController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Permissions.ViewAccessControl)]
     public async Task<ActionResult<AccessControlVm>> GetConfiguration()
     {
         var roles = await _roleManager.Roles
@@ -34,6 +34,7 @@ public class AccessControlController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize(Permissions.ConfigureAccessControl)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> UpdateConfiguration(RoleDto updatedRole)
     {

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BasicAuth.Server.Controllers.Admin;
 
-[Authorize(Roles = "Administrators")]
+[Authorize(Roles = "Administrators, Auditors")]
 [ApiController]
 [Route("api/Admin/[controller]")]
 public class RolesController : ControllerBase

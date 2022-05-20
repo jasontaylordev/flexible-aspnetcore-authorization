@@ -50,7 +50,7 @@
                 </NavLink>
             </div>
         </FlexibleAuthorizeView>
-        <FlexibleAuthorizeView Permissions="@(Permissions.ConfigureAccessControl)">
+        <FlexibleAuthorizeView Permissions="@(Permissions.ViewAccessControl | Permissions.ConfigureAccessControl)">
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="admin/access-control">
                     <span class="oi oi-lock-locked" aria-hidden="true"></span> Access Control
