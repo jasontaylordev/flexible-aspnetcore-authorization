@@ -41,35 +41,7 @@ Console.WriteLine($"Required Permissions: {(int)requiredPermissions}");
 // Check permissions
 Console.WriteLine($"User Permissions: {userPermissions}");
 Console.WriteLine($"Required Permissions: {requiredPermissions}");
-Console.WriteLine($"Authorised?: {userPermissions.HasFlag(requiredPermissions)}");
-
-#!csharp
-
-// Get list of all permissions
-var allPermissionsList = Enum.GetValues(typeof(Permissions))
-    .OfType<Permissions>()
-    .ToList();
-
-// Get list of required permissions
-var requiredPermissionsList = new List<Permissions>();
-foreach(var permission in allPermissionsList)
-{
-    if (requiredPermissions.HasFlag(permission))
-        requiredPermissionsList.Add(permission);
-}
-
-// Check permissions
-var authorized = false;
-foreach (var permission in requiredPermissionsList) 
-{
-    if (userPermissions.HasFlag(permission)) 
-    {
-        authorized = true;
-        break;
-    }
-}
-
-Console.WriteLine($"Authorised?: {authorized}");
+Console.WriteLine($"Authorised: {((requiredPermissions & userPermissions) != 0)}");
 
 #!csharp
 
@@ -88,6 +60,8 @@ userPermissions ^= Permissions.B;
 Console.WriteLine($"User Permissions: {userPermissions}");
 
 #!csharp
+
+requiredPermissions = Permissions.A | Permissions.B;
 
 // Create a policy name
 // [Authorize(Permissions.A | Permission.B)]

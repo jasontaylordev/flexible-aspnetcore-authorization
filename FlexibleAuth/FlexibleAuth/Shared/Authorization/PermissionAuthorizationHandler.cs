@@ -20,25 +20,12 @@ public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionAut
             return Task.CompletedTask;
         }
 
-        var requiredPermissions = new List<Permissions>();
-        foreach (var permission in PermissionsProvider.GetAll())
-        {
-            if (permission == Permissions.None) continue;
-
-            if (requirement.Permissions.HasFlag(permission))
-            {
-                requiredPermissions.Add(permission);
-            }
-        }
-
         var userPermissions = (Permissions)permissionClaimValue;
-        foreach (var permission in requiredPermissions)
+
+        if ((userPermissions & requirement.Permissions) != 0)
         {
-            if (userPermissions.HasFlag(permission))
-            {
-                context.Succeed(requirement);
-                return Task.CompletedTask;
-            }
+            context.Succeed(requirement);
+            return Task.CompletedTask;
         }
 
         return Task.CompletedTask;
