@@ -1,7 +1,5 @@
 ﻿using FlexibleAuth.Client.Services;
 using FlexibleAuth.Shared;
-using FlexibleAuth.Shared.Authorization;
-using InfiniteEnumFlags;
 using Microsoft.AspNetCore.Components;
 
 namespace FlexibleAuth.Client.Pages.Admin.AccessControl;

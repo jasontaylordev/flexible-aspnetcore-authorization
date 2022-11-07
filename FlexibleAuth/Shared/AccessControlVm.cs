@@ -1,6 +1,4 @@
 ﻿using FlexibleAuth.Shared.Authorization;
-using InfiniteEnumFlags;
-
 namespace FlexibleAuth.Shared;
 
 public class AccessControlVm

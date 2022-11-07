@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\src\lib\lib.csproj" />
+    <ProjectReference Include="..\..\..\..\src\InfiniteEnumFlags.csproj" />
     <ProjectReference Include="..\Client\FlexibleAuth.Client.csproj" />
     <ProjectReference Include="..\Shared\FlexibleAuth.Shared.csproj" />
   </ItemGroup>
