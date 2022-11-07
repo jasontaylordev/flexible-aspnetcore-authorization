@@ -1,6 +1,7 @@
 ﻿using FlexibleAuth.Server.Models;
 using FlexibleAuth.Shared;
 using FlexibleAuth.Shared.Authorization;
+using InfiniteEnumFlags;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,14 +20,14 @@ public class AccessControlController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Permissions.ViewAccessControl)]
+    [Authorize(nameof(Permission.ViewAccessControl))]
     public async Task<ActionResult<AccessControlVm>> GetConfiguration()
     {
         var roles = await _roleManager.Roles
             .ToListAsync();
 
         var roleDtos = roles
-            .Select(r => new RoleDto(r.Id, r.Name, r.Permissions))
+            .Select(r => new RoleDto(r.Id, r.Name, r.Permission.ToBase64Key()))
             .OrderBy(r => r.Name)
             .ToList();
 
@@ -34,7 +35,7 @@ public class AccessControlController : ControllerBase
     }
 
     [HttpPut]
-    [Authorize(Permissions.ConfigureAccessControl)]
+    [Authorize(nameof(Permission.ConfigureAccessControl))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> UpdateConfiguration(RoleDto updatedRole)
     {
@@ -42,7 +43,7 @@ public class AccessControlController : ControllerBase
 
         if (role != null)
         {
-            role.Permissions = updatedRole.Permissions;
+            role.Permission = Flag<Permission>.FromBase64(updatedRole.Permissions);
 
             await _roleManager.UpdateAsync(role);
         }

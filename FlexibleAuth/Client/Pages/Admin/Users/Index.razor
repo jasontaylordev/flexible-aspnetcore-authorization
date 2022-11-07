@@ -1,5 +1,5 @@
 ﻿@page "/admin/users"
-@attribute [Authorize(Permissions.ViewUsers | Permissions.ManageUsers)]
+@attribute [Authorize(nameof(Permission.ViewUsers), nameof(Permission.ManageUsers))]
 
 <PageTitle>Users</PageTitle>
 
@@ -9,24 +9,24 @@
 
 <table class="table table-striped table-hover w-75">
     <thead>
-        <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
-        @foreach (var user in Users)
-        {
-            <tr>
-                <td>@user.UserName</td>
-                <td>@user.Email</td>
-                <td>
-                    <FlexibleAuthorizeView Permissions="@Permissions.ManageUsers">
-                        <a href="/admin/users/@user.Id">Edit</a>
-                    </FlexibleAuthorizeView>
-                </td>
-            </tr>
-        }
+    @foreach (var user in Users)
+    {
+        <tr>
+            <td>@user.UserName</td>
+            <td>@user.Email</td>
+            <td>
+                <FlexibleAuthorizeView Permissions="@Permission.ManageUsers">
+                    <a href="/admin/users/@user.Id">Edit</a>
+                </FlexibleAuthorizeView>
+            </td>
+        </tr>
+    }
     </tbody>
 </table>

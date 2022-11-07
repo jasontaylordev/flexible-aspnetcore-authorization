@@ -37,7 +37,7 @@ public class DbInitializer
             {
                 Name = AdministratorsRole,
                 NormalizedName = AdministratorsRole.ToUpper(),
-                Permissions = Permissions.All
+                Permission = Permission.All
             });
 
         await _roleManager.CreateAsync(
@@ -45,9 +45,9 @@ public class DbInitializer
             {
                 Name = AccountsRole,
                 NormalizedName = AccountsRole.ToUpper(),
-                Permissions =
-                    Permissions.ViewUsers |
-                    Permissions.Counter
+                Permission =
+                    Permission.ViewUsers |
+                    Permission.Counter
             });
 
         await _roleManager.CreateAsync(
@@ -55,14 +55,14 @@ public class DbInitializer
             {
                 Name = OperationsRole,
                 NormalizedName = OperationsRole.ToUpper(),
-                Permissions =
-                    Permissions.ViewUsers |
-                    Permissions.Forecast
+                Permission =
+                    Permission.ViewUsers |
+                    Permission.Forecast
             });
 
         // Ensure admin role has all permissions
         var adminRole = await _roleManager.FindByNameAsync(AdministratorsRole);
-        adminRole!.Permissions = Permissions.All;
+        adminRole!.Permission = Permission.All;
         await _roleManager.UpdateAsync(adminRole);
 
         // Create default admin user

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using InfiniteEnumFlags;
 
 namespace FlexibleAuth.Shared.Authorization;
 
@@ -15,14 +16,9 @@ public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionAut
             return Task.CompletedTask;
         }
 
-        if (!int.TryParse(permissionClaim.Value, out int permissionClaimValue))
-        {
-            return Task.CompletedTask;
-        }
+        var userPermissions = Flag<Permission>.FromBase64(permissionClaim.Value);
 
-        var userPermissions = (Permissions)permissionClaimValue;
-
-        if ((userPermissions & requirement.Permissions) != 0)
+        if (userPermissions.HasFlag(requirement.Permission))
         {
             context.Succeed(requirement);
             return Task.CompletedTask;

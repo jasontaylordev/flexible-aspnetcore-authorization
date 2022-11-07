@@ -1,24 +1,23 @@
 ﻿using FlexibleAuth.Shared.Authorization;
+using InfiniteEnumFlags;
 
 namespace FlexibleAuth.Shared;
 
 public class AccessControlVm
 {
-    internal AccessControlVm() { }
-
     public AccessControlVm(List<RoleDto> roles)
     {
         Roles = roles;
+        AvailablePermissions = new();
 
         foreach(var permission in PermissionsProvider.GetAll())
         {
-            if (permission == Permissions.None) continue;
-
-            AvailablePermissions.Add(permission);
+            if (permission.Value == Permission.None) continue;
+            AvailablePermissions.Add(permission.Key, permission.Value.ToBase64Key());
         }
     }
 
     public List<RoleDto> Roles { get; set; } = new();
 
-    public List<Permissions> AvailablePermissions { get; set; } = new();
+    public Dictionary<string,string> AvailablePermissions { get; set; }
 }

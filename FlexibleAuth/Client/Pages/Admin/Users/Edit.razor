@@ -1,5 +1,5 @@
 ﻿@page "/admin/users/{userId}"
-@attribute [Authorize(Permissions.ManageUsers)]
+@attribute [Authorize(nameof(Permission.ManageUsers))]
 
 <PageTitle>Users - Edit</PageTitle>
 

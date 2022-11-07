@@ -1,4 +1,6 @@
-﻿namespace FlexibleAuth.Shared.Authorization;
+﻿using InfiniteEnumFlags;
+
+namespace FlexibleAuth.Shared.Authorization;
 
 public static class PolicyNameHelper
 {
@@ -9,15 +11,14 @@ public static class PolicyNameHelper
         return policyName != null && policyName.StartsWith(Prefix, StringComparison.OrdinalIgnoreCase);
     }
 
-    public static string GeneratePolicyNameFor(Permissions permissions)
+    public static string GeneratePolicyNameFor(Flag<Permission> permission)
     {
-        return $"{Prefix}{(int)permissions}";
+        return $"{Prefix}{permission.ToBase64Key()}";
     }
 
-    public static Permissions GetPermissionsFrom(string policyName)
+    public static Flag<Permission> GetPermissionsFrom(string policyName)
     {
-        var permissionsValue = int.Parse(policyName[Prefix.Length..]!);
-
-        return (Permissions)permissionsValue;
+        var key = policyName.Replace(Prefix, "");
+        return Flag<Permission>.FromBase64(key);
     }
 }

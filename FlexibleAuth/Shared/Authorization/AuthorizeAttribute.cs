@@ -1,27 +1,32 @@
-﻿namespace FlexibleAuth.Shared.Authorization;
+﻿using InfiniteEnumFlags;
+
+namespace FlexibleAuth.Shared.Authorization;
 
 public class AuthorizeAttribute : Microsoft.AspNetCore.Authorization.AuthorizeAttribute
 {
     public AuthorizeAttribute() { }
 
-    public AuthorizeAttribute(string policy) : base(policy) { }
+    //public AuthorizeAttribute(string policy) : base(policy) { }
 
-    public AuthorizeAttribute(Permissions permission)
+    public AuthorizeAttribute(params string[] permissions)
     {
-        Permissions = permission;
+        var result = new Flag<Permission>();
+        Permissions = permissions.Select(Permission.FromName)
+            .Where(perm => perm is not null)
+            .Aggregate(result, (current, perm) => current | (perm ?? Permission.None));
     }
 
-    public Permissions Permissions
+    public Flag<Permission> Permissions
     {
         get
         {
             return !string.IsNullOrEmpty(Policy) 
                 ? PolicyNameHelper.GetPermissionsFrom(Policy) 
-                : Permissions.None;
+                : Permission.None;
         }
         set
         {
-            Policy = value != Permissions.None 
+            Policy = value != Permission.None 
                 ? PolicyNameHelper.GeneratePolicyNameFor(value)
                 : string.Empty;
         }

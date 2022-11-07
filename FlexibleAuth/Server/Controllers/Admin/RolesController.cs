@@ -20,7 +20,7 @@ public class RolesController : ControllerBase
 
     // GET: api/Admin/Roles
     [HttpGet]
-    [Authorize(Permissions.ViewRoles)]
+    [Authorize(nameof(Permission.ViewRoles))]
     public async Task<ActionResult<IEnumerable<RoleDto>>> GetRoles()
     {
         var roles = await _roleManager.Roles
@@ -28,27 +28,27 @@ public class RolesController : ControllerBase
             .ToListAsync();
 
         return roles
-            .Select(r => new RoleDto(r.Id, r.Name, r.Permissions))
+            .Select(r => new RoleDto(r.Id, r.Name, r.Permission.ToBase64Key()))
             .ToList();
     }
 
     // POST: api/Admin/Roles
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    [Authorize(Permissions.ManageRoles)]
+    [Authorize(nameof(Permission.ManageRoles))]
     public async Task<ActionResult<RoleDto>> PostRole(RoleDto newRole)
     {
         var role = new Role { Name = newRole.Name };
 
         await _roleManager.CreateAsync(role);
 
-        return new RoleDto(role.Id, role.Name, role.Permissions);
+        return new RoleDto(role.Id, role.Name, role.Permission.ToBase64Key());
     }
 
     // PUT: api/Admin/Roles/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    [Authorize(Permissions.ManageRoles)]
+    [Authorize(nameof(Permission.ManageRoles))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> PutRole(string id, RoleDto updatedRole)
@@ -74,7 +74,7 @@ public class RolesController : ControllerBase
 
     // DELETE: api/Admin/Roles/5
     [HttpDelete("{id}")]
-    [Authorize(Permissions.ManageRoles)]
+    [Authorize(nameof(Permission.ManageRoles))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteRole(string id)

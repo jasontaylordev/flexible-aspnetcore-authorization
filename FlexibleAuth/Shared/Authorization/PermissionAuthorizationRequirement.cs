@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using InfiniteEnumFlags;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FlexibleAuth.Shared.Authorization;
 
 public class PermissionAuthorizationRequirement : IAuthorizationRequirement
 {
-    public PermissionAuthorizationRequirement(Permissions permission)
+    public PermissionAuthorizationRequirement(Flag<Permission> permission)
     {
-        Permissions = permission;
+        Permission = permission;
     }
 
-    public Permissions Permissions { get; }
+    public Flag<Permission> Permission { get; }
 }

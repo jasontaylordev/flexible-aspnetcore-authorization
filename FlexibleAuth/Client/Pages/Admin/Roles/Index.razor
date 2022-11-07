@@ -1,5 +1,5 @@
 ﻿@page "/admin/roles"
-@attribute [Authorize(Permissions.ViewRoles)]
+@attribute [Authorize(nameof(Permission.ViewRoles))]
 
 <PageTitle>Roles</PageTitle>
 
@@ -24,7 +24,7 @@
                         <input type="text" id="name" class="form-control-plaintext" style="padding-left: 0.75rem" value="@role.Name" />
                     </td>
                     <td>
-                        <FlexibleAuthorizeView Permissions="@Permissions.ManageRoles">
+                        <FlexibleAuthorizeView Permissions="@Permission.ManageRoles">
                             <button type="button" class="btn btn-secondary" @onclick="() => EditRole(role)">
                                 <span class="oi oi-pencil"></span>
                             </button>
@@ -42,7 +42,7 @@
                         <input type="text" id="name" class="form-control" @bind="@role.Name" />
                     </td>
                     <td>
-                        <FlexibleAuthorizeView Permissions="@Permissions.ManageRoles">
+                        <FlexibleAuthorizeView Permissions="@Permission.ManageRoles">
                             <button type="button" class="btn btn-secondary" @onclick="() => UpdateRole()">
                                 <span class="oi oi-check"></span>
                             </button>
@@ -55,7 +55,7 @@
             }
         }
     </tbody>
-    <FlexibleAuthorizeView Permissions="@Permissions.ManageRoles">
+    <FlexibleAuthorizeView Permissions="@Permission.ManageRoles">
         <tfoot>
             <tr>
                 <td>

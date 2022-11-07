@@ -2,10 +2,14 @@
 using Duende.IdentityServer.EntityFramework.Extensions;
 using Duende.IdentityServer.EntityFramework.Interfaces;
 using Duende.IdentityServer.EntityFramework.Options;
+using FlexibleAuth.Server.Models;
+using FlexibleAuth.Shared.Authorization;
+using InfiniteEnumFlags;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+#pragma warning disable CS8618
 
 namespace FlexibleAuth.Server.Data;
 
@@ -49,6 +53,11 @@ public class ApiAuthorizationDbContext<TUser, TRole> : IdentityDbContext<TUser, 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+        builder.Entity<Role>()
+            .Property(q => q.Permission)
+            .HasConversion(
+                flag => flag.ToBase64Key(),
+                str => Flag<Permission>.FromBase64(str));
         builder.ConfigurePersistedGrantContext(_operationalStoreOptions.Value);
     }
 }

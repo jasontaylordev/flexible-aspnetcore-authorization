@@ -1,5 +1,5 @@
 ﻿@page "/fetchdata"
-@attribute [Authorize(Permissions.Forecast)]
+@attribute [Authorize(nameof(Permission.Forecast))]
 
 @inject HttpClient Http
 

@@ -13,4 +13,8 @@
   <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\lib\lib.csproj" />
+  </ItemGroup>
 </Project>

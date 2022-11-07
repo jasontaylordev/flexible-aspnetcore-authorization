@@ -13,8 +13,9 @@ public class ApplicationUserClaimsPrincipalFactory : UserClaimsPrincipalFactory<
         UserManager<User> userManager,
         RoleManager<Role> roleManager,
         IOptions<IdentityOptions> optionsAccessor)
-    : base(userManager, roleManager, optionsAccessor)
-    { }
+        : base(userManager, roleManager, optionsAccessor)
+    {
+    }
 
     protected override async Task<ClaimsIdentity> GenerateClaimsAsync(User user)
     {
@@ -25,15 +26,14 @@ public class ApplicationUserClaimsPrincipalFactory : UserClaimsPrincipalFactory<
         var userRoles = await RoleManager.Roles.Where(r =>
             userRoleNames.Contains(r.Name)).ToListAsync();
 
-        var userPermissions = Permissions.None;
+        var userPermissions = Permission.None;
 
         foreach (var role in userRoles)
-            userPermissions |= role.Permissions;
+            userPermissions |= role.Permission;
 
-        var permissionsValue = (int)userPermissions;
+        var permissionsValue = userPermissions.ToBase64Key();
 
-        identity.AddClaim(
-            new Claim(CustomClaimTypes.Permissions, permissionsValue.ToString()));
+        identity.AddClaim(new Claim(CustomClaimTypes.Permissions, permissionsValue));
 
         return identity;
     }

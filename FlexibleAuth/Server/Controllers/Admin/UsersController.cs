@@ -20,7 +20,7 @@ namespace FlexibleAuth.Server.Controllers.Admin
 
         // GET: api/Admin/Users
         [HttpGet]
-        [Authorize(Permissions.ViewUsers | Permissions.ManageUsers)]
+        [Authorize(nameof(Permission.ViewUsers), nameof(Permission.ManageUsers))]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
             return await _userManager.Users
@@ -31,7 +31,7 @@ namespace FlexibleAuth.Server.Controllers.Admin
 
         // GET: api/Admin/Users/5
         [HttpGet("{id}")]
-        [Authorize(Permissions.ViewUsers)]
+        [Authorize(nameof(Permission.ViewUsers))]
         public async Task<ActionResult<UserDto>> GetUser(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -55,7 +55,7 @@ namespace FlexibleAuth.Server.Controllers.Admin
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize(Permissions.ManageUsers)]
+        [Authorize(nameof(Permission.ManageUsers))]
         public async Task<IActionResult> PutUser(string id, UserDto updatedUser)
         {
             if (id != updatedUser.Id)

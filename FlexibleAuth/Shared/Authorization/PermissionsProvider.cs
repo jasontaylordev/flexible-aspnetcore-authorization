@@ -1,11 +1,15 @@
-﻿namespace FlexibleAuth.Shared.Authorization;
+﻿using System.Reflection;
+using InfiniteEnumFlags;
+
+namespace FlexibleAuth.Shared.Authorization;
 
 public static class PermissionsProvider
 {
-    public static List<Permissions> GetAll()
+    public static Dictionary<string,Flag<Permission>> GetAll()
     {
-        return Enum.GetValues(typeof(Permissions))
-            .OfType<Permissions>()
-            .ToList();
+        return typeof(Permission)
+            .GetFields(BindingFlags.Public | BindingFlags.Static)
+            .Where(f => f.FieldType == typeof(Flag<Permission>))
+            .ToDictionary(f => f.Name, f => (Flag<Permission>) f.GetValue(null)!);
     }
 }

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FlexibleAuth.Server.Controllers;
 
-[Authorize(Permissions.Forecast)]
+[Authorize(nameof(Permission.Forecast))]
 [ApiController]
 [Route("[controller]")]
 public class WeatherForecastController : ControllerBase

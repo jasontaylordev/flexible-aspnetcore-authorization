@@ -1,4 +1,5 @@
 ﻿using FlexibleAuth.Shared.Authorization;
+using InfiniteEnumFlags;
 
 namespace FlexibleAuth.Shared;
 
@@ -8,10 +9,10 @@ public class RoleDto
     {
         Id = string.Empty;
         Name = string.Empty;
-        Permissions = Permissions.None;
+        Permissions = Permission.None.ToBase64Key();
     }
 
-    public RoleDto(string id, string name, Permissions permissions)
+    public RoleDto(string id, string name, string permissions)
     {
         Id = id;
         Name = name;
@@ -22,32 +23,32 @@ public class RoleDto
 
     public string Name { get; set; }
 
-    public Permissions Permissions { get; set; }
+    public string Permissions { get; set; }
 
-    public bool Has(Permissions permission)
+    public bool Has(string permissionKey)
     {
-        return Permissions.HasFlag(permission);;
+        return (Flag<Permission>.FromBase64(Permissions).HasFlag(Flag<Permission>.FromBase64(permissionKey)));
     }
 
-    public void Set(Permissions permission, bool granted)
+    public void Set(string permissionKey, bool granted)
     {
         if (granted)
         {
-            Grant(permission);
+            Grant((Flag<Permission>.FromBase64(permissionKey)));
         }
         else
         {
-            Revoke(permission);
+            Revoke((Flag<Permission>.FromBase64(permissionKey)));
         }
     }
 
-    public void Grant(Permissions permission)
+    public void Grant(Flag<Permission> permission)
     {
-        Permissions |= permission;
+        Permissions = (Flag<Permission>.FromBase64(Permissions) | permission).ToBase64Key();
     }
 
-    public void Revoke(Permissions permission)
+    public void Revoke(Flag<Permission> permission)
     {
-        Permissions ^= permission;
+        Permissions = (Flag<Permission>.FromBase64(Permissions) ^ permission).ToBase64Key();
     }
 }
