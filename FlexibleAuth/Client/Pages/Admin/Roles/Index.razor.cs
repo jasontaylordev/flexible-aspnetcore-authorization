@@ -2,7 +2,8 @@
 using FlexibleAuth.Shared;
 using FlexibleAuth.Shared.Authorization;
 using Microsoft.AspNetCore.Components;
-
+#pragma warning disable CS8625
+#pragma warning disable CS8618
 namespace FlexibleAuth.Client.Pages.Admin.Roles;
 
 public partial class Index

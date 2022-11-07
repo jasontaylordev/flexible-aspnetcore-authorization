@@ -16,6 +16,5 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\src\InfiniteEnumFlags.csproj" />
-    <ProjectReference Include="..\..\..\..\src\lib\lib.csproj" />
   </ItemGroup>
 </Project>
