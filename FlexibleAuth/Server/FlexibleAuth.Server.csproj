@@ -35,8 +35,8 @@
 		<UserSecretsId>0aa8462a-eea1-42b9-ba71-b8e24475753f</UserSecretsId>
 	</PropertyGroup>
 
-	<Target Name="NSwag" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">
-		<Exec WorkingDirectory="$(ProjectDir)" EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="$(NSwagExe_Net60) run /variables:Configuration=$(Configuration)" />
-	</Target>
+<!--	<Target Name="NSwag" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">-->
+<!--		<Exec WorkingDirectory="$(ProjectDir)" EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="$(NSwagExe_Net60) run /variables:Configuration=$(Configuration)" />-->
+<!--	</Target>-->
 
 </Project>
