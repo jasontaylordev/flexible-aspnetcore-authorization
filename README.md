@@ -1,6 +1,6 @@
 # Developing Flexible Authorization Capabilities with ASP.NET Core
 
-### This is and example submodule project for the [InfiniteEnumFlags](https://github.com/alirezanet/InfiniteEnumFlags) library. 
+### This is and example project for the [InfiniteEnumFlags](https://github.com/alirezanet/InfiniteEnumFlags) library. 
 
 To run this example you need to either manually add `InfiniteEnumFlags` nuget package to the shared project or use the main repo. 
 
