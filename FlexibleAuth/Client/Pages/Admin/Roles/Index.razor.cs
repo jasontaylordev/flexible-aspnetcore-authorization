@@ -27,7 +27,7 @@ public partial class Index
         if (!string.IsNullOrWhiteSpace(newRoleName))
         {
             var role = await RolesClient.PostRoleAsync(
-                new RoleDto("", newRoleName, Permission.None.ToBase64Key()));
+                new RoleDto("", newRoleName, Permission.None.ToUniqueId()));
 
             Roles.Add(role);
         }

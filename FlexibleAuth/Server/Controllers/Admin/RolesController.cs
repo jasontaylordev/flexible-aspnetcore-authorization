@@ -28,7 +28,7 @@ public class RolesController : ControllerBase
             .ToListAsync();
 
         return roles
-            .Select(r => new RoleDto(r.Id, r.Name, r.Permission.ToBase64Key()))
+            .Select(r => new RoleDto(r.Id, r.Name, r.Permission.ToUniqueId()))
             .ToList();
     }
 
@@ -42,7 +42,7 @@ public class RolesController : ControllerBase
 
         await _roleManager.CreateAsync(role);
 
-        return new RoleDto(role.Id, role.Name, role.Permission.ToBase64Key());
+        return new RoleDto(role.Id, role.Name, role.Permission.ToUniqueId());
     }
 
     // PUT: api/Admin/Roles/5

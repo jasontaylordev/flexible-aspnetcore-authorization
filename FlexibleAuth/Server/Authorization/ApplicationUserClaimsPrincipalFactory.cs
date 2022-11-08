@@ -31,7 +31,7 @@ public class ApplicationUserClaimsPrincipalFactory : UserClaimsPrincipalFactory<
         foreach (var role in userRoles)
             userPermissions |= role.Permission;
 
-        var permissionsValue = userPermissions.ToBase64Key();
+        var permissionsValue = userPermissions.ToUniqueId();
 
         identity.AddClaim(new Claim(CustomClaimTypes.Permissions, permissionsValue));
 

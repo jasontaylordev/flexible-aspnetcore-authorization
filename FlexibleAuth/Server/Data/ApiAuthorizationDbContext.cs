@@ -56,8 +56,8 @@ public class ApiAuthorizationDbContext<TUser, TRole> : IdentityDbContext<TUser, 
         builder.Entity<Role>()
             .Property(q => q.Permission)
             .HasConversion(
-                flag => flag.ToBase64Key(),
-                str => Flag<Permission>.FromBase64(str));
+                flag => flag.ToUniqueId() ,
+                str => Permission.FromUniqueId(str));
         builder.ConfigurePersistedGrantContext(_operationalStoreOptions.Value);
     }
 }

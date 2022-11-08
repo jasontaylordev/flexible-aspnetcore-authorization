@@ -9,7 +9,7 @@ public class RoleDto
     {
         Id = string.Empty;
         Name = string.Empty;
-        Permissions = Permission.None.ToBase64Key();
+        Permissions = Permission.None.ToUniqueId();
     }
 
     public RoleDto(string id, string name, string permissions)
@@ -27,28 +27,28 @@ public class RoleDto
 
     public bool Has(string permissionKey)
     {
-        return (Flag<Permission>.FromBase64(Permissions).HasFlag(Flag<Permission>.FromBase64(permissionKey)));
+        return (Flag<Permission>.FromUniqueId(Permissions).HasFlag(Flag<Permission>.FromUniqueId(permissionKey)));
     }
 
     public void Set(string permissionKey, bool granted)
     {
         if (granted)
         {
-            Grant((Flag<Permission>.FromBase64(permissionKey)));
+            Grant((Flag<Permission>.FromUniqueId(permissionKey)));
         }
         else
         {
-            Revoke((Flag<Permission>.FromBase64(permissionKey)));
+            Revoke((Flag<Permission>.FromUniqueId(permissionKey)));
         }
     }
 
     public void Grant(Flag<Permission> permission)
     {
-        Permissions = (Flag<Permission>.FromBase64(Permissions) | permission).ToBase64Key();
+        Permissions = (Flag<Permission>.FromUniqueId(Permissions) | permission).ToUniqueId();
     }
 
     public void Revoke(Flag<Permission> permission)
     {
-        Permissions = (Flag<Permission>.FromBase64(Permissions) ^ permission).ToBase64Key();
+        Permissions = (Flag<Permission>.FromUniqueId(Permissions) ^ permission).ToUniqueId();
     }
 }

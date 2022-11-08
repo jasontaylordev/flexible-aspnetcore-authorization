@@ -11,7 +11,7 @@ public class AccessControlVm
         foreach(var permission in PermissionsProvider.GetAll())
         {
             if (permission.Value == Permission.None) continue;
-            AvailablePermissions.Add(permission.Key, permission.Value.ToBase64Key());
+            AvailablePermissions.Add(permission.Key, permission.Value.ToUniqueId());
         }
     }
 

@@ -13,12 +13,12 @@ public static class PolicyNameHelper
 
     public static string GeneratePolicyNameFor(Flag<Permission> permission)
     {
-        return $"{Prefix}{permission.ToBase64Key()}";
+        return $"{Prefix}{permission.ToUniqueId()}";
     }
 
     public static Flag<Permission> GetPermissionsFrom(string policyName)
     {
         var key = policyName.Replace(Prefix, "");
-        return Flag<Permission>.FromBase64(key);
+        return Flag<Permission>.FromUniqueId(key);
     }
 }

@@ -27,7 +27,7 @@ public class AccessControlController : ControllerBase
             .ToListAsync();
 
         var roleDtos = roles
-            .Select(r => new RoleDto(r.Id, r.Name, r.Permission.ToBase64Key()))
+            .Select(r => new RoleDto(r.Id, r.Name, r.Permission.ToUniqueId()))
             .OrderBy(r => r.Name)
             .ToList();
 
@@ -43,7 +43,7 @@ public class AccessControlController : ControllerBase
 
         if (role != null)
         {
-            role.Permission = Flag<Permission>.FromBase64(updatedRole.Permissions);
+            role.Permission = Flag<Permission>.FromUniqueId(updatedRole.Permissions);
 
             await _roleManager.UpdateAsync(role);
         }

@@ -16,7 +16,7 @@ public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionAut
             return Task.CompletedTask;
         }
 
-        var userPermissions = Flag<Permission>.FromBase64(permissionClaim.Value);
+        var userPermissions = Flag<Permission>.FromUniqueId(permissionClaim.Value);
 
         if (userPermissions.HasFlag(requirement.Permission))
         {
