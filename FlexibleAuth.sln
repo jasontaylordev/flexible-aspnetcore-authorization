@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlexibleAuth.Server", "Flex
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlexibleAuth.Shared", "FlexibleAuth\Shared\FlexibleAuth.Shared.csproj", "{8EBB3B02-AB04-4712-93C9-BCCA729E7F01}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InfiniteEnumFlags", "..\..\src\InfiniteEnumFlags.csproj", "{D8929693-193F-4B21-AAAB-ED620E7DCA98}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{8EBB3B02-AB04-4712-93C9-BCCA729E7F01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EBB3B02-AB04-4712-93C9-BCCA729E7F01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EBB3B02-AB04-4712-93C9-BCCA729E7F01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8929693-193F-4B21-AAAB-ED620E7DCA98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8929693-193F-4B21-AAAB-ED620E7DCA98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8929693-193F-4B21-AAAB-ED620E7DCA98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8929693-193F-4B21-AAAB-ED620E7DCA98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

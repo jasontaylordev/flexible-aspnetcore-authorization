@@ -11,10 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <SupportedPlatform Include="browser" />
+    <ProjectReference Include="..\..\..\..\src\InfiniteEnumFlags.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\src\InfiniteEnumFlags.csproj" />
+    <SupportedPlatform Include="browser" />
   </ItemGroup>
 </Project>
