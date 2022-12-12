@@ -1,0 +1,56 @@
+﻿@page "/admin/access-control"
+@attribute [Authorize(
+               nameof(Permission.ViewAccessControl),
+               nameof(Permission.ConfigureAccessControl))]
+
+<PageTitle>Access Control</PageTitle>
+
+<h1>Access Control</h1>
+
+<p>This is a description.</p>
+
+@if (_vm == null)
+{
+return;
+}
+
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>Permissions</th>
+        @foreach (var role in _vm.Roles)
+        {
+            <th>@role.Name</th>
+        }
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var permission in _vm.AvailablePermissions)
+    {
+        <tr>
+            <th>@permission.Key</th>
+            @foreach (var role in _vm.Roles)
+            {
+                <th>
+                    <FlexibleAuthorizeView Permissions="@Permission.ConfigureAccessControl">
+                        <Authorized>
+                            <input
+                                type="checkbox"
+                                class="form-check-input"
+                                checked="@role.Has(permission.Value)"
+                                @onchange="(args) => Set(role, permission.Value, (bool)args.Value!)"/>
+                        </Authorized>
+                        <NotAuthorized>
+                            <input
+                                type="checkbox"
+                                class="form-check-input"
+                                checked="@role.Has(permission.Value)"
+                                disabled="disabled"/>
+                        </NotAuthorized>
+                    </FlexibleAuthorizeView>
+                </th>
+            }
+        </tr>
+    }
+    </tbody>
+</table>
