@@ -25,7 +25,7 @@ public class UsersController : ControllerBase
     {
         return await _userManager.Users
             .OrderBy(u => u.UserName)
-            .Select(u => new UserDto(u.Id, u.UserName, u.Email))
+            .Select(u => new UserDto(u.Id, u.UserName ?? string.Empty, u.Email ?? string.Empty))
             .ToListAsync();
     }
 
@@ -40,7 +40,7 @@ public class UsersController : ControllerBase
             return NotFound();
         }
 
-        var dto = new UserDto(user.Id, user.UserName, user.Email);
+        var dto = new UserDto(user.Id, user.UserName ?? string.Empty, user.Email ?? string.Empty);
 
         var roles = await _userManager.GetRolesAsync(user);
 

@@ -28,7 +28,7 @@ public class RolesController : ControllerBase
             .ToListAsync();
 
         return roles
-            .Select(r => new RoleDto(r.Id, r.Name))
+            .Select(r => new RoleDto(r.Id, r.Name ?? $"Role {r.Id}"))
             .ToList();
     }
 }
