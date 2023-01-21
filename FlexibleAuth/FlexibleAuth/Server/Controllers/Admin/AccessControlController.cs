@@ -26,7 +26,7 @@ public class AccessControlController : ControllerBase
             .ToListAsync();
 
         var roleDtos = roles
-            .Select(r => new RoleDto(r.Id, r.Name, r.Permissions))
+            .Select(r => new RoleDto(r.Id, r.Name ?? string.Empty, r.Permissions))
             .OrderBy(r => r.Name)
             .ToList();
 

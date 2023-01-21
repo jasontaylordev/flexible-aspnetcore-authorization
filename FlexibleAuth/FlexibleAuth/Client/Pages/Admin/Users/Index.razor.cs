@@ -6,8 +6,7 @@ namespace FlexibleAuth.Client.Pages.Admin.Users;
 
 public partial class Index
 {
-    [Inject]
-    public IUsersClient UsersClient { get; set; }
+    [Inject] public IUsersClient UsersClient { get; set; } = null!;
 
     public ICollection<UserDto> Users { get; set; } = new List<UserDto>();
 

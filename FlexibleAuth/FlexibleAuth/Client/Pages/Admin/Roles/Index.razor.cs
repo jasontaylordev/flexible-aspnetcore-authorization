@@ -8,13 +8,13 @@ namespace FlexibleAuth.Client.Pages.Admin.Roles;
 public partial class Index
 {
     [Inject]
-    public IRolesClient RolesClient { get; set; }
+    public IRolesClient RolesClient { get; set; } = null!;
 
     public ICollection<RoleDto> Roles { get; set; } = new List<RoleDto>();
 
     private string newRoleName = string.Empty;
 
-    private RoleDto roleToEdit;
+    private RoleDto? roleToEdit;
 
     protected override async Task OnInitializedAsync()
     {
@@ -46,7 +46,7 @@ public partial class Index
 
     private async Task UpdateRole()
     {
-        await RolesClient.PutRoleAsync(roleToEdit.Id, roleToEdit);
+        await RolesClient.PutRoleAsync(roleToEdit!.Id, roleToEdit);
 
         roleToEdit = null;
     }

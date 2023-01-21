@@ -28,7 +28,7 @@ public class RolesController : ControllerBase
             .ToListAsync();
 
         return roles
-            .Select(r => new RoleDto(r.Id, r.Name, r.Permissions))
+            .Select(r => new RoleDto(r.Id, r.Name ?? string.Empty, r.Permissions))
             .ToList();
     }
 
@@ -59,6 +59,11 @@ public class RolesController : ControllerBase
         }
 
         var role = await _roleManager.FindByIdAsync(id);
+
+        if (role == null)
+        {
+            return NotFound();
+        }
 
         role.Name = updatedRole.Name;
 

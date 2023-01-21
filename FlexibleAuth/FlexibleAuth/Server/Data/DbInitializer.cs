@@ -71,7 +71,10 @@ public class DbInitializer
         await _userManager.CreateAsync(adminUser, DefaultPassword);
 
         adminUser = await _userManager.FindByNameAsync(adminUserName);
-        await _userManager.AddToRoleAsync(adminUser, AdministratorsRole);
+        if (adminUser != null)
+        {
+            await _userManager.AddToRoleAsync(adminUser, AdministratorsRole);
+        }
 
         // Create default auditor user
         var auditorUserName = "auditor@localhost";
