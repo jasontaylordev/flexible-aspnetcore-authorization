@@ -5,29 +5,31 @@ namespace FlexibleAuth.Shared.Authorization;
 
 public class FlexibleAuthorizationPolicyProvider : DefaultAuthorizationPolicyProvider
 {
-    private readonly AuthorizationOptions _options;
+    private readonly ConcurrentDictionary<string, AuthorizationPolicy> _policies = new ConcurrentDictionary<string, AuthorizationPolicy>();
 
     public FlexibleAuthorizationPolicyProvider(IOptions<AuthorizationOptions> options)
         : base(options)
     {
-        _options = options.Value;
     }
 
     public override async Task<AuthorizationPolicy?> GetPolicyAsync(string policyName)
     {
-        var policy = await base.GetPolicyAsync(policyName);
-
-        if (policy == null && PolicyNameHelper.IsValidPolicyName(policyName))
+        if (!PolicyNameHelper.IsValidPolicyName(policyName))
         {
-            var permissions = PolicyNameHelper.GetPermissionsFrom(policyName);
-
-            policy = new AuthorizationPolicyBuilder()
-                .AddRequirements(new PermissionAuthorizationRequirement(permissions))
-                .Build();
-
-            _options.AddPolicy(policyName!, policy);
+            return await base.GetPolicyAsync(policyName);
         }
 
+        var policy = _policies.GetOrAdd(policyName, AuthorizationPolicyFactory);
+
         return policy;
+    }
+
+    private static AuthorizationPolicy AuthorizationPolicyFactory(string policyName)
+    {
+        var permissions = PolicyNameHelper.GetPermissionsFrom(policyName);
+
+        return new AuthorizationPolicyBuilder()
+            .AddRequirements(new PermissionAuthorizationRequirement(permissions))
+            .Build();
     }
 }
